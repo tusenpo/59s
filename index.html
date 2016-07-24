@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>59s</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+        <style media="screen">
+            html {
+                height: 100%;
+            }
+            body {
+                display: flex;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+            }
+            .time {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: "Share Tech Mono", monospace;
+                font-size: 144px;
+                user-select: none;
+                -moz-user-select: none;
+            }
+            header, footer {
+                color: #777;
+            }
+            @media (max-width: 720px) {
+                .time {
+                    font-size: 72px;
+                }
+            }
+            @media (max-width: 480px) {
+                .time {
+                    font-size: 48px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            在中国，每过 59 秒就有一分钟过去了。
+        </header>
+        <section class="time">
+            <span id="hour">--</span>:
+            <span id="minute">--</span>:
+            <span id="second">--</span>
+        </section>
+        <footer>
+            © 2016 <a href="https://github.com/tagaoyan/59s">Yan Gao</a>
+        </footer>
+    </body>
+    <script>
+        var zeroPad2 = function(num) {
+            if (num >= 0 && num <= 9) {
+                return '0' + num.toString();
+            } else {
+                return num.toString();
+            }
+        };
+        var updateTime = function() {
+            var now = new Date(Date.now() - 1000*60*2.3333);
+            var hourElem = document.getElementById('hour');
+            var minuteElem = document.getElementById('minute');
+            var secondElem = document.getElementById('second');
+            hourElem.innerHTML = zeroPad2(now.getHours());
+            minuteElem.innerHTML = zeroPad2(now.getMinutes());
+            secondElem.innerHTML = zeroPad2(
+                Math.floor((now.getSeconds() + now.getMilliseconds() / 1000 + 1) * 59.0 / 60.0)
+            );
+        };
+        setInterval(updateTime, 100);
+    </script>
+</html>
